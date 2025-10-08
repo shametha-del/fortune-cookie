@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fortune Cookie Fun</title>
+<title>Fun Fortune Cookie</title>
 <style>
-/* Basic styles */
 body {
   margin: 0;
   font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -23,7 +22,7 @@ body {
   max-width: 480px;
   text-align: center;
   position: relative;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 h1 {
   color: #4923e0;
@@ -50,7 +49,7 @@ button {
   font-weight: bold;
 }
 button.primary {
-  background: #ffcc00; /* golden button for fun contrast */
+  background: #ffcc00;
   color: #4923e0;
 }
 button.muted {
@@ -58,9 +57,10 @@ button.muted {
   color: #333;
 }
 #fortune-img {
-  max-width: 180px;
+  max-width: 200px;
   margin-top: 15px;
   display: none;
+  border-radius: 15px;
 }
 .confetti-piece {
   position: absolute;
@@ -69,18 +69,18 @@ button.muted {
   pointer-events: none;
   opacity: 0.9;
   border-radius: 50%;
-  animation: confetti-fall 2s linear forwards;
+  animation: confetti-fall linear forwards;
 }
 @keyframes confetti-fall {
   0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+  100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
 }
 </style>
 </head>
 <body>
 <div class="card">
   <h1>🍪 Your Fortune</h1>
-  <img id="fortune-img" src="" alt="Fortune Cookie">
+  <img id="fortune-img" src="" alt="Fortune GIF">
   <p class="phrase" id="phrase">— Tap "Reveal" —</p>
   <div>
     <button id="reveal" class="primary">Reveal</button>
@@ -89,7 +89,7 @@ button.muted {
 </div>
 
 <script>
-// --- Custom fortune phrases ---
+// --- Fortune phrases ---
 const phrases = [
     "Hello Alice! Today is your lucky day.",
     "Bob, you will find something wonderful today.",
@@ -99,54 +99,56 @@ const phrases = [
     "A small adventure awaits you."
 ];
 
-// --- Fortune cookie cliparts ---
+// --- Fun GIFs for fortune cookie ---
 const images = [
-    "https://i.postimg.cc/4xLZ9V5Q/fortune1.png",
-    "https://i.postimg.cc/Yq8hLPk1/fortune2.png",
-    "https://i.postimg.cc/T1c1sYcv/fortune3.png"
+    "https://media.giphy.com/media/26xBJu0Y1U0B8QkvO/giphy.gif",
+    "https://media.giphy.com/media/l41lFw057lAJQMwg0/giphy.gif",
+    "https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif"
 ];
 
 const phraseEl = document.getElementById('phrase');
 const imgEl = document.getElementById('fortune-img');
 
-// --- Pick a random fortune and image ---
+// --- Pick random phrase and GIF ---
 function pick() {
     const text = phrases[Math.floor(Math.random()*phrases.length)];
     const img = images[Math.floor(Math.random()*images.length)];
     return {text, img};
 }
 
-// --- Show fortune after confetti ---
+// --- Show fortune after blasting confetti ---
 function showFortune() {
-    // Hide phrase & image initially
+    // Hide previous content
     phraseEl.classList.remove('show');
     imgEl.style.display = 'none';
     
     launchConfetti();
     
-    // After confetti animation (~2s), show fortune
+    // Show content after confetti (1.5s delay)
     setTimeout(()=>{
         const {text, img} = pick();
         phraseEl.textContent = text;
         imgEl.src = img;
         imgEl.style.display = 'block';
         phraseEl.classList.add('show');
-    }, 2000);
+    }, 1500);
 }
 
 document.getElementById('reveal').addEventListener('click', showFortune);
 document.getElementById('again').addEventListener('click', showFortune);
 
-// --- Confetti animation ---
+// --- Blasting confetti ---
 function launchConfetti() {
-    for(let i=0;i<50;i++){
+    const colors = ["#FFD700", "#FF4500", "#32CD32", "#00BFFF", "#FF69B4", "#FFA500"];
+    for(let i=0;i<100;i++){
         const confetti = document.createElement('div');
         confetti.classList.add('confetti-piece');
         confetti.style.left = Math.random()*100 + "%";
-        confetti.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
-        confetti.style.width = confetti.style.height = Math.random()*8+4 + "px";
+        confetti.style.width = confetti.style.height = Math.random()*10+5 + "px";
+        confetti.style.background = colors[Math.floor(Math.random()*colors.length)];
+        confetti.style.animationDuration = (Math.random()*1+2)+"s"; // 2-3s
         document.body.appendChild(confetti);
-        setTimeout(()=> confetti.remove(), 2000);
+        setTimeout(()=> confetti.remove(), 3000);
     }
 }
 </script>
