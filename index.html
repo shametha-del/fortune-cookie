@@ -1,40 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Fortune</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Fortune</title>
 <style>
-  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;display:flex;
-  min-height:100vh;margin:0;align-items:center;justify-content:center;background:#fff;}
-  .card{max-width:520px;padding:28px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.08);
-    text-align:center;border:1px solid rgba(0,0,0,0.04);}
-  h1{margin:0 0 12px;font-size:18px;color:#333;}
-  p.phrase{font-size:20px;margin:18px 0 22px;color:#111;min-height:3.2em;display:flex;align-items:center;justify-content:center}
-  button{appearance:none;border:0;padding:10px 16px;border-radius:10px;font-size:15px;cursor:pointer}
-  .primary{background:#4923e0;color:white}
-  .muted{background:#f0f0f0;margin-left:10px}
-  footer{font-size:12px;color:#666;margin-top:12px}
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background: linear-gradient(to right, #ffe4e1, #f0f8ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.card {
+  background: #fff8dc;
+  border: 2px dashed #4923e0;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  max-width: 500px;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+}
+h1 {
+  margin: 0 0 15px;
+  font-size: 24px;
+  color: #4923e0;
+}
+.phrase {
+  font-size: 20px;
+  min-height: 3em;
+  margin: 20px 0;
+  opacity: 0;
+  transition: opacity 0.6s ease-in;
+}
+.phrase.show {
+  opacity: 1;
+}
+button {
+  cursor: pointer;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  margin: 5px;
+}
+button.primary {
+  background: #ff69b4;
+  color: white;
+  font-weight: bold;
+}
+button.muted {
+  background: #f0f0f0;
+}
+#fortune-img {
+  max-width: 200px;
+  margin-top: 15px;
+  border-radius: 15px;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: red;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: confetti-fall 3s linear forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+}
 </style>
 </head>
 <body>
-<div class="card" role="main" aria-live="polite">
-  <h1>Your Fortune</h1>
+<div class="card">
+  <h1>Your Fun Fortune</h1>
+  <img id="fortune-img" src="https://placekitten.com/200/200" alt="Fortune Image">
   <p class="phrase" id="phrase">— Tap "Reveal" —</p>
   <div>
     <button id="reveal" class="primary">Reveal</button>
     <button id="again" class="muted">Draw Again</button>
   </div>
-  <footer>Scan the QR to reveal a random phrase.</footer>
 </div>
+
 <script>
-const phrases = ["Hello Alice! Today is your lucky day.",
+// --- Custom fortune phrases ---
+const phrases = [
+    "Hello Alice! Today is your lucky day.",
     "Bob, you will find something wonderful today.",
-    "Carla, expect a pleasant surprise this week."];
-function pick(){ return phrases[Math.floor(Math.random()*phrases.length)]; }
+    "Carla, expect a pleasant surprise this week.",
+    "Good vibes are coming your way!",
+    "You will inspire someone today.",
+    "A small adventure awaits you."
+];
+
+// --- Random images ---
+const images = [
+    "https://placekitten.com/200/200",
+    "https://placebear.com/200/200",
+    "https://placebeard.it/200x200",
+    "https://place-puppy.com/200x200",
+    "https://loremflickr.com/200/200/funny"
+];
+
 const phraseEl = document.getElementById('phrase');
-document.getElementById('reveal').addEventListener('click', ()=> phraseEl.textContent = pick());
-document.getElementById('again').addEventListener('click', ()=> phraseEl.textContent = pick());
+const imgEl = document.getElementById('fortune-img');
+
+function pick() {
+    const text = phrases[Math.floor(Math.random()*phrases.length)];
+    const img = images[Math.floor(Math.random()*images.length)];
+    return {text, img};
+}
+
+function showPhrase() {
+    const {text, img} = pick();
+    phraseEl.classList.remove('show');
+    phraseEl.textContent = text;
+    imgEl.src = img;
+    setTimeout(()=> phraseEl.classList.add('show'), 50);
+    launchConfetti();
+}
+
+document.getElementById('reveal').addEventListener('click', showPhrase);
+document.getElementById('again').addEventListener('click', showPhrase);
+
+// --- Confetti animation ---
+function launchConfetti() {
+    for(let i=0;i<30;i++){
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti-piece');
+        confetti.style.left = Math.random()*90 + "%";
+        confetti.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+        confetti.style.width = confetti.style.height = Math.random()*8+4 + "px";
+        document.body.appendChild(confetti);
+        setTimeout(()=> confetti.remove(), 3000);
+    }
+}
 </script>
 </body>
 </html>
