@@ -28,7 +28,9 @@
   <footer>Scan the QR to reveal a random phrase.</footer>
 </div>
 <script>
-const phrases = ["A delightful surprise is headed your way.", "New opportunities will open when you least expect them.", "Trust your instincts \u2014 they are leading you well.", "A small act of kindness will return to you multiplied.", "You will make a valuable connection today.", "Something you lost will soon be found.", "Laugh loudly today \u2014 it\u2019s good for the soul.", "Courage will bring you a reward this week.", "Expect a call that brightens your day.", "An old friend will bring new joy.", "Your creativity will solve a persistent problem.", "Be curious \u2014 the answer is closer than it appears.", "Today is perfect for starting something new.", "A refreshing change is coming to your routine.", "You\u2019ll discover a hidden talent.", "Generosity opens unexpected doors.", "A small risk will yield a pleasant surprise.", "Follow a hunch \u2014 it knows the path.", "You will inspire someone without realizing it.", "Take time to celebrate a tiny victory.", "Good news will arrive by the end of the week.", "Patience now brings greater rewards later.", "Share a smile \u2014 it will be contagious.", "A thoughtful conversation will change your plans."];
+const phrases = ["Hello Alice! Today is your lucky day.",
+    "Bob, you will find something wonderful today.",
+    "Carla, expect a pleasant surprise this week."];
 function pick(){ return phrases[Math.floor(Math.random()*phrases.length)]; }
 const phraseEl = document.getElementById('phrase');
 document.getElementById('reveal').addEventListener('click', ()=> phraseEl.textContent = pick());
