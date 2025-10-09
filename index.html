@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fun Fortune Cookie</title>
+<title>Fortune Cookie Fun</title>
 <style>
 body {
   margin: 0;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: #4923e0; /* brand color */
+  font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  background: #4923e0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,10 +16,10 @@ body {
   overflow: hidden;
 }
 .card {
-  background: #fff;
-  border-radius: 20px;
+  background: #ffffff;
+  border-radius: 24px;
   padding: 30px;
-  max-width: 480px;
+  max-width: 500px;
   text-align: center;
   position: relative;
   box-shadow: 0 15px 40px rgba(0,0,0,0.25);
@@ -27,10 +27,11 @@ body {
 h1 {
   color: #4923e0;
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 26px;
 }
 .phrase {
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 1.5;
   min-height: 3em;
   margin-top: 15px;
   opacity: 0;
@@ -57,30 +58,30 @@ button.muted {
   color: #333;
 }
 #fortune-img {
-  max-width: 200px;
+  max-width: 220px;
   margin-top: 15px;
   display: none;
   border-radius: 15px;
 }
 .confetti-piece {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 14px;
+  opacity: 0.8;
   pointer-events: none;
-  opacity: 0.9;
-  border-radius: 50%;
+  border-radius: 2px;
   animation: confetti-fall linear forwards;
 }
 @keyframes confetti-fall {
   0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
+  100% { transform: translateY(600px) rotate(720deg); opacity: 0; }
 }
 </style>
 </head>
 <body>
 <div class="card">
   <h1>🍪 Your Fortune</h1>
-  <img id="fortune-img" src="" alt="Fortune GIF">
+  <img id="fortune-img" src="" alt="Fun GIF">
   <p class="phrase" id="phrase">— Tap "Reveal" —</p>
   <div>
     <button id="reveal" class="primary">Reveal</button>
@@ -91,65 +92,76 @@ button.muted {
 <script>
 // --- Fortune phrases ---
 const phrases = [
-    "Hello Alice! Today is your lucky day.",
-    "Bob, you will find something wonderful today.",
-    "Carla, expect a pleasant surprise this week.",
-    "Good vibes are coming your way!",
-    "You will inspire someone today.",
-    "A small adventure awaits you."
+  "A Monday awaits with 0 Slack pings - did the Wi-Fi die or are you finally free?",
+  "You’ll never hit “Reply All” again. Phew!",
+  "The pantry shall always bless you with cold tender coconut and zero judgment.",
+  "You’ll finally reach inbox zero… and stay there for 5 glorious minutes.",
+  "Your favorite chair will stay put. NOBODY MOVES IT!",
+  "No US chocolates go missing for you!",
+  "Pepper will not ask for a belly rub but will love you back anyway.",
+  "The Wi-Fi will not break down during your call.",
+  "Someone will ACTUALLY get donuts to the office and not just put a message on Slack.",
+  "Only your favorite music plays on the floor.",
+  "The AC is now set to ‘human,’ not ‘penguin nesting ground.’",
+  "Your Zoom background won’t expose your messy room again.",
+  "You’ll always find a meeting room free.",
+  "Nobody blocks the massage chair when you want it.",
+  "You’ll have a no-meeting Friday!"
 ];
 
-// --- Fun GIFs for fortune cookie ---
+// --- Fun GIFs (reliable hosted links) ---
 const images = [
-    "https://media.giphy.com/media/26xBJu0Y1U0B8QkvO/giphy.gif",
-    "https://media.giphy.com/media/l41lFw057lAJQMwg0/giphy.gif",
-    "https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif"
+  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2EybzJvMWQ0ZXc3d2c3OXk0bzgwYWlzd3Q2eDJjYXk5ZTB4eHFxYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/g9582DNuQppxC/giphy.gif",
+  "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif",
+  "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif",
+  "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif",
+  "https://media.giphy.com/media/fxsqOYnIMEefC/giphy.gif",
+  "https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif",
+  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif"
 ];
 
 const phraseEl = document.getElementById('phrase');
 const imgEl = document.getElementById('fortune-img');
 
-// --- Pick random phrase and GIF ---
+// --- Pick random phrase + GIF ---
 function pick() {
-    const text = phrases[Math.floor(Math.random()*phrases.length)];
-    const img = images[Math.floor(Math.random()*images.length)];
-    return {text, img};
+  const text = phrases[Math.floor(Math.random() * phrases.length)];
+  const img = images[Math.floor(Math.random() * images.length)];
+  return { text, img };
 }
 
-// --- Show fortune after blasting confetti ---
+// --- Show fortune after confetti blast ---
 function showFortune() {
-    // Hide previous content
-    phraseEl.classList.remove('show');
-    imgEl.style.display = 'none';
-    
-    launchConfetti();
-    
-    // Show content after confetti (1.5s delay)
-    setTimeout(()=>{
-        const {text, img} = pick();
-        phraseEl.textContent = text;
-        imgEl.src = img;
-        imgEl.style.display = 'block';
-        phraseEl.classList.add('show');
-    }, 1500);
+  phraseEl.classList.remove('show');
+  imgEl.style.display = 'none';
+  launchConfetti();
+  setTimeout(() => {
+    const { text, img } = pick();
+    phraseEl.textContent = text;
+    imgEl.src = img;
+    imgEl.style.display = 'block';
+    phraseEl.classList.add('show');
+  }, 2000);
 }
 
 document.getElementById('reveal').addEventListener('click', showFortune);
 document.getElementById('again').addEventListener('click', showFortune);
 
-// --- Blasting confetti ---
+// --- Stylish confetti animation ---
 function launchConfetti() {
-    const colors = ["#FFD700", "#FF4500", "#32CD32", "#00BFFF", "#FF69B4", "#FFA500"];
-    for(let i=0;i<100;i++){
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti-piece');
-        confetti.style.left = Math.random()*100 + "%";
-        confetti.style.width = confetti.style.height = Math.random()*10+5 + "px";
-        confetti.style.background = colors[Math.floor(Math.random()*colors.length)];
-        confetti.style.animationDuration = (Math.random()*1+2)+"s"; // 2-3s
-        document.body.appendChild(confetti);
-        setTimeout(()=> confetti.remove(), 3000);
-    }
+  const colors = ["#FF69B4", "#FFD700", "#00BFFF", "#ADFF2F", "#FF4500", "#FFB6C1"];
+  for (let i = 0; i < 150; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti-piece');
+    confetti.style.left = Math.random() * 100 + "%";
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.width = Math.random() > 0.5 ? "4px" : "10px";
+    confetti.style.height = Math.random() > 0.5 ? "12px" : "6px";
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    confetti.style.animationDuration = (Math.random() * 1 + 2.5) + "s";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+  }
 }
 </script>
 </body>
