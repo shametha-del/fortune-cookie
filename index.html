@@ -15,20 +15,39 @@ body {
   min-height: 100vh;
   overflow: hidden;
 }
+
+.header {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header img {
+  height: 60px;
+  width: auto;
+}
+
 .card {
   background: #ffffff;
   border-radius: 24px;
   padding: 30px;
   max-width: 520px;
+  width: 90%;
   text-align: center;
   position: relative;
   box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
+
 h1 {
   color: #4923e0;
   margin-bottom: 20px;
   font-size: 26px;
 }
+
 .phrase {
   font-size: 18px;
   line-height: 1.5;
@@ -37,9 +56,11 @@ h1 {
   opacity: 0;
   transition: opacity 0.6s ease-in;
 }
+
 .phrase.show {
   opacity: 1;
 }
+
 button {
   cursor: pointer;
   border: none;
@@ -49,20 +70,26 @@ button {
   margin: 8px;
   font-weight: bold;
 }
+
 button.primary {
   background: #ffcc00;
   color: #4923e0;
 }
+
 button.muted {
   background: #f0f0f0;
   color: #333;
 }
+
 #fortune-img {
-  max-width: 220px;
-  margin-top: 15px;
+  max-width: 280px;
+  margin: 15px auto 10px;
   display: none;
-  border-radius: 15px;
+  border-radius: 16px;
+  object-fit: contain;
+  display: block;
 }
+
 .confetti-piece {
   position: absolute;
   width: 10px;
@@ -72,6 +99,7 @@ button.muted {
   border-radius: 2px;
   animation: confetti-fall linear forwards;
 }
+
 @keyframes confetti-fall {
   0% { transform: translateY(0) rotate(0deg); }
   100% { transform: translateY(600px) rotate(720deg); opacity: 0; }
@@ -79,6 +107,12 @@ button.muted {
 </style>
 </head>
 <body>
+
+<div class="header">
+  <img src="Almabase_India_IN_English_2025_Certification_Badge.jpg" alt="GPTW Badge">
+  <div style="width:60px;"></div> <!-- placeholder for symmetry -->
+</div>
+
 <div class="card">
   <h1>🍪 Your Fortune</h1>
   <img id="fortune-img" src="" alt="Fun GIF">
@@ -113,28 +147,21 @@ const phrases = [
   "No one will see you take the 3rd piece of birthday/WA cake."
 ];
 
-// --- Fun GIFs (reliable hosted links) ---
+// --- Clean set of reliable GIFs ---
 const images = [
-  "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif",
   "https://media.giphy.com/media/fxsqOYnIMEefC/giphy.gif",
   "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
-  "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif",
-  "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif",
-  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif",
-  "https://media.giphy.com/media/3o7aD4p4DC8aQJvS4Q/giphy.gif",
-  "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif",
   "https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif",
-  "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif",
   "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
   "https://media.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy.gif",
-  "https://media.giphy.com/media/xT0xezQGU5xCDJuCPe/giphy.gif",
-  "https://media.giphy.com/media/3orieT1ZzI5VFe2wM0/giphy.gif",
-  "https://media.giphy.com/media/3oEjHQnaRQZczfG3I0/giphy.gif",
   "https://media.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif",
-  "https://media.giphy.com/media/QBd2kLB5qDmysEXre9/giphy.gif",
-  "https://media.giphy.com/media/xT0xezQGU5xCDJuCPe/giphy.gif",
-  "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
-  "https://media.giphy.com/media/3oEduSbSGpGaRX2Vri/giphy.gif"
+  "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif",
+  "https://media.giphy.com/media/3orieT1ZzI5VFe2wM0/giphy.gif",
+  "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif",
+  "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif",
+  "https://media.giphy.com/media/3oEjHQnaRQZczfG3I0/giphy.gif",
+  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
+  "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif"
 ];
 
 const phraseEl = document.getElementById('phrase');
@@ -155,11 +182,9 @@ function showFortune() {
   setTimeout(() => {
     const { text, img } = pick();
     phraseEl.textContent = text;
-
-    // Fix: Handle broken GIFs gracefully
     imgEl.src = img;
     imgEl.onerror = () => {
-      imgEl.src = "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif"; // fallback
+      imgEl.src = "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif";
     };
     imgEl.style.display = 'block';
     phraseEl.classList.add('show');
