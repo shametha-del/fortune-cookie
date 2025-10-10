@@ -127,34 +127,39 @@ const phrases = [
   "No one will see you take the 3rd piece of birthday/WA cake."
 ];
 
-// --- GIFs ---
+// --- 20 fun & universal GIFs ---
 const images = [
-  "https://media.giphy.com/media/fxsqOYnIMEefC/giphy.gif",
-  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
-  "https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif",
-  "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
-  "https://media.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy.gif",
-  "https://media.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif",
-  "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif",
-  "https://media.giphy.com/media/3orieT1ZzI5VFe2wM0/giphy.gif",
-  "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif",
-  "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif",
-  "https://media.giphy.com/media/3oEjHQnaRQZczfG3I0/giphy.gif",
-  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
-  "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif"
+  "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", // confetti blast
+  "https://media.giphy.com/media/xT9IglCAX5ZsY9F2m8/giphy.gif", // celebration dance
+  "https://media.giphy.com/media/l4JyOCNEfXvVYEqB2/giphy.gif", // yay jump
+  "https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif", // clapping
+  "https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif", // thumbs up
+  "https://media.giphy.com/media/l0ExvMqS0lYtP9zzi/giphy.gif", // applause crowd
+  "https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif", // office cheer
+  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif", // dance
+  "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif", // sparkles
+  "https://media.giphy.com/media/xT0GqFzH3lF3NQ7WVa/giphy.gif", // smiling confetti
+  "https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif", // happy team
+  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif", // dancing repeat variant
+  "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif", // high five
+  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif", // fun dance
+  "https://media.giphy.com/media/3o6Zt8MgUuvSbkZYWc/giphy.gif", // spark joy
+  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif", // fun confetti loop
+  "https://media.giphy.com/media/3orieUe6ejxSFxYCXe/giphy.gif", // woohoo
+  "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif", // fallback confetti
+  "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif", // happy dance
+  "https://media.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif"  // smile celebration
 ];
 
 const phraseEl = document.getElementById('phrase');
 const imgEl = document.getElementById('fortune-img');
 
-// --- Pick random phrase + GIF ---
 function pick() {
   const text = phrases[Math.floor(Math.random() * phrases.length)];
   const img = images[Math.floor(Math.random() * images.length)];
   return { text, img };
 }
 
-// --- Show fortune after confetti blast ---
 function showFortune() {
   phraseEl.classList.remove('show');
   imgEl.style.display = 'none';
@@ -174,7 +179,6 @@ function showFortune() {
 document.getElementById('reveal').addEventListener('click', showFortune);
 document.getElementById('again').addEventListener('click', showFortune);
 
-// --- Confetti animation ---
 function launchConfetti() {
   const colors = ["#FF69B4", "#FFD700", "#00BFFF", "#ADFF2F", "#FF4500", "#FFB6C1"];
   for (let i = 0; i < 150; i++) {
