@@ -16,21 +16,6 @@ body {
   overflow: hidden;
 }
 
-.header {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header img {
-  height: 60px;
-  width: auto;
-}
-
 .card {
   background: #ffffff;
   border-radius: 24px;
@@ -108,11 +93,6 @@ button.muted {
 </head>
 <body>
 
-<div class="header">
-  <img src="Almabase_India_IN_English_2025_Certification_Badge.jpg" alt="GPTW Badge">
-  <div style="width:60px;"></div> <!-- placeholder for symmetry -->
-</div>
-
 <div class="card">
   <h1>🍪 Your Fortune</h1>
   <img id="fortune-img" src="" alt="Fun GIF">
@@ -147,7 +127,7 @@ const phrases = [
   "No one will see you take the 3rd piece of birthday/WA cake."
 ];
 
-// --- Clean set of reliable GIFs ---
+// --- GIFs ---
 const images = [
   "https://media.giphy.com/media/fxsqOYnIMEefC/giphy.gif",
   "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
@@ -194,7 +174,7 @@ function showFortune() {
 document.getElementById('reveal').addEventListener('click', showFortune);
 document.getElementById('again').addEventListener('click', showFortune);
 
-// --- Stylish confetti animation ---
+// --- Confetti animation ---
 function launchConfetti() {
   const colors = ["#FF69B4", "#FFD700", "#00BFFF", "#ADFF2F", "#FF4500", "#FFB6C1"];
   for (let i = 0; i < 150; i++) {
