@@ -26,6 +26,7 @@ body {
   text-align: center;
   line-height: 1.6;
   margin: 0;
+  font-weight: 500;
 }
 
 .card {
@@ -43,6 +44,7 @@ h1 {
   color: #4923e0;
   margin-bottom: 20px;
   font-size: 26px;
+  margin-top: 0;
 }
 
 .phrase {
@@ -52,6 +54,7 @@ h1 {
   margin-top: 15px;
   opacity: 0;
   transition: opacity 0.6s ease-in;
+  color: #333;
 }
 
 .phrase.show {
@@ -66,6 +69,11 @@ button {
   font-size: 16px;
   margin: 8px;
   font-weight: bold;
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 
 button.primary {
@@ -80,15 +88,15 @@ button.muted {
 
 #fortune-img {
   max-width: 280px;
+  width: 100%;
   margin: 15px auto 10px;
   display: none;
   border-radius: 16px;
   object-fit: contain;
-  display: block;
 }
 
 .confetti-piece {
-  position: absolute;
+  position: fixed;
   width: 10px;
   height: 14px;
   opacity: 0.8;
@@ -118,10 +126,9 @@ button.muted {
 </div>
 
 <script>
-// --- Fortune phrases ---
 const phrases = [
   "A Monday awaits with 0 Slack pings - did the Wi-Fi die or are you finally free?",
-  "You'll never hit "Reply All" again. Phew!",
+  "You'll never hit 'Reply All' again. Phew!",
   "The pantry shall always bless you with cold tender coconut and zero judgment.",
   "You'll finally reach inbox zero… and stay there for 5 glorious minutes.",
   "Your favorite chair will stay put. NOBODY MOVES IT!",
@@ -130,7 +137,7 @@ const phrases = [
   "The Wi-Fi will not break down during your call.",
   "Someone will ACTUALLY get donuts to the office and not just put a message on Slack.",
   "Only your favorite music plays on the floor.",
-  "The AC is now set to 'human,' not 'penguin nesting ground.'",
+  "The AC is now set to 'human', not 'penguin nesting ground.'",
   "Your Zoom background won't expose your messy room again.",
   "You'll always find a meeting room free.",
   "Nobody blocks the massage chair when you want it.",
@@ -141,32 +148,31 @@ const phrases = [
   "No one will see you take the 3rd piece of birthday/WA cake."
 ];
 
-// --- 20 fun & universal GIFs ---
 const images = [
-  "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", // confetti blast
-  "https://media.giphy.com/media/xT9IglCAX5ZsY9F2m8/giphy.gif", // celebration dance
-  "https://media.giphy.com/media/l4JyOCNEfXvVYEqB2/giphy.gif", // yay jump
-  "https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif", // clapping
-  "https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif", // thumbs up
-  "https://media.giphy.com/media/l0ExvMqS0lYtP9zzi/giphy.gif", // applause crowd
-  "https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif", // office cheer
-  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif", // dance
-  "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif", // sparkles
-  "https://media.giphy.com/media/xT0GqFzH3lF3NQ7WVa/giphy.gif", // smiling confetti
-  "https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif", // happy team
-  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif", // dancing repeat variant
-  "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif", // high five
-  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif", // fun dance
-  "https://media.giphy.com/media/3o6Zt8MgUuvSbkZYWc/giphy.gif", // spark joy
-  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif", // fun confetti loop
-  "https://media.giphy.com/media/3orieUe6ejxSFxYCXe/giphy.gif", // woohoo
-  "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif", // fallback confetti
-  "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif", // happy dance
-  "https://media.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif"  // smile celebration
+  "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+  "https://media.giphy.com/media/xT9IglCAX5ZsY9F2m8/giphy.gif",
+  "https://media.giphy.com/media/l4JyOCNEfXvVYEqB2/giphy.gif",
+  "https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif",
+  "https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif",
+  "https://media.giphy.com/media/l0ExvMqS0lYtP9zzi/giphy.gif",
+  "https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif",
+  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif",
+  "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+  "https://media.giphy.com/media/xT0GqFzH3lF3NQ7WVa/giphy.gif",
+  "https://media.giphy.com/media/3o6Zt6ML6BklcajjsA/giphy.gif",
+  "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif",
+  "https://media.giphy.com/media/3o6Zt8MgUuvSbkZYWc/giphy.gif",
+  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
+  "https://media.giphy.com/media/3orieUe6ejxSFxYCXe/giphy.gif",
+  "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif",
+  "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+  "https://media.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif"
 ];
 
 const phraseEl = document.getElementById('phrase');
 const imgEl = document.getElementById('fortune-img');
+const revealBtn = document.getElementById('reveal');
+const againBtn = document.getElementById('again');
 
 function pick() {
   const text = phrases[Math.floor(Math.random() * phrases.length)];
@@ -178,6 +184,7 @@ function showFortune() {
   phraseEl.classList.remove('show');
   imgEl.style.display = 'none';
   launchConfetti();
+  
   setTimeout(() => {
     const { text, img } = pick();
     phraseEl.textContent = text;
@@ -187,11 +194,11 @@ function showFortune() {
     };
     imgEl.style.display = 'block';
     phraseEl.classList.add('show');
-  }, 2000);
+  }, 600);
 }
 
-document.getElementById('reveal').addEventListener('click', showFortune);
-document.getElementById('again').addEventListener('click', showFortune);
+revealBtn.addEventListener('click', showFortune);
+againBtn.addEventListener('click', showFortune);
 
 function launchConfetti() {
   const colors = ["#FF69B4", "#FFD700", "#00BFFF", "#ADFF2F", "#FF4500", "#FFB6C1"];
@@ -199,15 +206,21 @@ function launchConfetti() {
     const confetti = document.createElement('div');
     confetti.classList.add('confetti-piece');
     confetti.style.left = Math.random() * 100 + "%";
+    confetti.style.top = "-20px";
     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
     confetti.style.width = Math.random() > 0.5 ? "4px" : "10px";
     confetti.style.height = Math.random() > 0.5 ? "12px" : "6px";
-    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
     confetti.style.animationDuration = (Math.random() * 1 + 2.5) + "s";
     document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 3000);
+    
+    setTimeout(() => {
+      if (confetti.parentNode) {
+        confetti.parentNode.removeChild(confetti);
+      }
+    }, 3500);
   }
 }
 </script>
+
 </body>
 </html>
