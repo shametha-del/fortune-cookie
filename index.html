@@ -19,7 +19,7 @@ body {
   background: #ffffff;
   border-radius: 24px;
   padding: 30px;
-  max-width: 500px;
+  max-width: 520px;
   text-align: center;
   position: relative;
   box-shadow: 0 15px 40px rgba(0,0,0,0.25);
@@ -106,22 +106,35 @@ const phrases = [
   "Your Zoom background won’t expose your messy room again.",
   "You’ll always find a meeting room free.",
   "Nobody blocks the massage chair when you want it.",
-  "You’ll have a no-meeting Friday!"
-  "Bhaiya will never make the food you do not like!"
-  "AI will understand your prompt in the first try and give you the perfect answer"
-  "You will hit your quarter goals a week prior. Hehe"
-  "No one will see you take the 3rd piece of birthday/WA cake"
+  "You’ll have a no-meeting Friday!",
+  "Bhaiya will never make the food you do not like!",
+  "AI will understand your prompt in the first try and give you the perfect answer.",
+  "You will hit your quarter goals a week prior. Hehe",
+  "No one will see you take the 3rd piece of birthday/WA cake."
 ];
 
 // --- Fun GIFs (reliable hosted links) ---
 const images = [
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2EybzJvMWQ0ZXc3d2c3OXk0bzgwYWlzd3Q2eDJjYXk5ZTB4eHFxYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/g9582DNuQppxC/giphy.gif",
-  "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif",
   "https://media.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif",
-  "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif",
   "https://media.giphy.com/media/fxsqOYnIMEefC/giphy.gif",
+  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
+  "https://media.giphy.com/media/l1J9EdzfOSgfyueLm/giphy.gif",
+  "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif",
+  "https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif",
+  "https://media.giphy.com/media/3o7aD4p4DC8aQJvS4Q/giphy.gif",
+  "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif",
   "https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif",
-  "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif"
+  "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif",
+  "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+  "https://media.giphy.com/media/3oKIPCSX4UHmuS41TG/giphy.gif",
+  "https://media.giphy.com/media/xT0xezQGU5xCDJuCPe/giphy.gif",
+  "https://media.giphy.com/media/3orieT1ZzI5VFe2wM0/giphy.gif",
+  "https://media.giphy.com/media/3oEjHQnaRQZczfG3I0/giphy.gif",
+  "https://media.giphy.com/media/8Iv5lqKwKsZ2g/giphy.gif",
+  "https://media.giphy.com/media/QBd2kLB5qDmysEXre9/giphy.gif",
+  "https://media.giphy.com/media/xT0xezQGU5xCDJuCPe/giphy.gif",
+  "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+  "https://media.giphy.com/media/3oEduSbSGpGaRX2Vri/giphy.gif"
 ];
 
 const phraseEl = document.getElementById('phrase');
@@ -142,7 +155,12 @@ function showFortune() {
   setTimeout(() => {
     const { text, img } = pick();
     phraseEl.textContent = text;
+
+    // Fix: Handle broken GIFs gracefully
     imgEl.src = img;
+    imgEl.onerror = () => {
+      imgEl.src = "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif"; // fallback
+    };
     imgEl.style.display = 'block';
     phraseEl.classList.add('show');
   }, 2000);
